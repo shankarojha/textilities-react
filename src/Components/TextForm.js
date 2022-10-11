@@ -4,9 +4,8 @@ import { useState } from "react";
 export default function TextForm(props) {
 
   const textChangeHandler=(event)=>{
-    
     setText(event.target.value)
-    setConvertedText((event.target.value))
+    setConvertedText(event.target.value)
   }
 
   const toUpperCaseHandler=()=>{
@@ -26,7 +25,18 @@ export default function TextForm(props) {
     props.showAlert("text copied", "success")
   }
 
-  const [text, setText] = useState();
+  const removeExtraSpacesHandler =()=>{
+    setText(text.replace(/\s+/g," ").trim())
+    setConvertedText(text.replace(/\s+/g," ").trim())
+    props.showAlert("Extra Spaces Removed","success")
+  }
+
+  const clearTextHandler=()=>{
+    setText("")
+    setConvertedText("")
+  }
+
+  const [text, setText] = useState("");
   const [convertedText, setConvertedText] = useState()
 
   return (
@@ -43,18 +53,20 @@ export default function TextForm(props) {
         value={text}
         onChange={textChangeHandler}
       ></textarea>
-      <button className="m-1 btn btn-primary" onClick={toUpperCaseHandler}>
+      <button disabled={text.length===0} className="m-1 btn btn-primary mt-3" onClick={toUpperCaseHandler}>
         To Uppercase
       </button>
-      <button className="m-1 btn btn-primary" onClick={toLowerCaseHandler}>
+      <button disabled={text.length===0} className="m-1 btn btn-primary mt-3" onClick={toLowerCaseHandler}>
         To Lowercase
       </button>
-      <button className="m-1 btn btn-primary" onClick={copyTextHandler}>
+      <button disabled={text.length===0} className="m-1 btn btn-primary mt-3" onClick={copyTextHandler}>
         Copy text
       </button>
+      <button disabled={text.length===0} className="m-1 btn btn-primary mt-3" onClick={removeExtraSpacesHandler}>Remove extra spaces</button>
+      <button disabled={text.length===0} className="m-1 btn btn-primary mt-3" onClick={clearTextHandler}>Clear text</button>
       <h3 style={{color:'red'}} className="m-1">{convertedText?"Text Preview":""}</h3>
       <h4 className="m-1">{convertedText}</h4>
-      <h6 className="m-1">{convertedText?`${convertedText.split(" ").length} words and ${convertedText.length} characters`:""}</h6>
+      <h6 className="m-1">{convertedText?`${convertedText.split(/\s+/).filter((element)=> element.length!==0).length} words and ${convertedText.length} characters`:""}</h6>
     </div>
   );
 }

@@ -34,7 +34,7 @@ function App() {
     } else {
       setMode("light")
       document.body.style.backgroundColor = "#FFFFFF"
-      showAlert("Dark mode disbled", "danger")
+      showAlert("Dark mode disbled", "Disabled")
     }
   }
 
