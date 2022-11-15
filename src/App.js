@@ -9,6 +9,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import TypeTest from './Components/TypeTest';
 
 function App() {
 
@@ -51,6 +52,7 @@ function App() {
               <Routes>
                 <Route exact path="/" element={<TextForm showAlert={showAlert} mode={mode} toggleMode={toggleModeHandler} ></TextForm>}/>
                 <Route exact path="/about" element={<About mode={mode} />}/>
+                <Route exact path="/typetest" element={<TypeTest mode={mode}></TypeTest>}/>
               </Routes>
             </div>
           </div>

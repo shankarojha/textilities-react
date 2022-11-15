@@ -16,6 +16,9 @@ export default function Navbar(props) {
           <Link className="nav-link active" aria-current="page" to="/" style={{color:props.mode==="dark"?"white":"black"}}>Home</Link>
         </li>
         <li className="nav-item">
+          <Link className="nav-link" to="/typetest" style={{color:props.mode==="dark"?"white":"black"}}>TypingTest</Link>
+        </li>
+        <li className="nav-item">
           <Link className="nav-link" to="/about" style={{color:props.mode==="dark"?"white":"black"}}>About</Link>
         </li>
         {/* <li className="nav-item dropdown">

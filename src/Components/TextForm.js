@@ -3,6 +3,9 @@ import { useState } from "react";
 
 export default function TextForm(props) {
 
+  const [text, setText] = useState("");
+  const [convertedText, setConvertedText] = useState()
+
   const textChangeHandler=(event)=>{
     setText(event.target.value)
     setConvertedText(event.target.value)
@@ -35,9 +38,6 @@ export default function TextForm(props) {
     setText("")
     setConvertedText("")
   }
-
-  const [text, setText] = useState("");
-  const [convertedText, setConvertedText] = useState()
 
   return (
     <div className="container" style={{color:props.mode==="dark"?"white":"black"}}>
