@@ -76,16 +76,17 @@ export default function TypeTest(props) {
                         ></textarea>
                     </div>
                     <div className='col-12 d-flex justify-content-center align-items-center mt-5'>
-                        {!running && <button style={{border:"2px solid red", borderRadius:"50%", height:"20vw", width:"20vw", fontSize:"3vw"}} className="btn btn-primary d-flex justify-content-center align-items-center" onClick={startTest}>START</button>}
-                        {running && <div style={{border:"10px solid green", borderRadius:"50%", height:"20vw", width:"20vw", fontSize:"3vw"}} className="d-flex justify-content-center align-items-center"> 
+                        {!running && <button style={{border:"0px solid red", borderRadius:"50%", height:"10vw", width:"10vw", fontSize:"2vw"}} className="btn btn-success d-flex justify-content-center align-items-center" onClick={startTest}>START</button>}
+                        {running && <div style={{border:"5px solid green", borderRadius:"50%", height:"10vw", width:"10vw", fontSize:"2vw"}} className="d-flex justify-content-center align-items-center"> 
                             <div>{seconds}</div>
                         </div>}
                     </div>
                     <div className='col-12 d-flex justify-content-center align-items-center mt-5'>  
-                        <div style={{border:"15px solid blue", borderRadius:"5%", height:"20vw", width:"20vw",fontSize:"3vw"}} className="d-flex justify-content-center align-items-center">
+                        {seconds==="Time Up" && <div style={{border:"5px solid blue", borderRadius:"5%", height:"15vw", width:"15vw",fontSize:"3vw"}} className="d-flex justify-content-center align-items-center">
                             <div>{score}WPM</div>
-                        </div>
+                        </div>}
                     </div>
+                    {seconds==="Time Up" &&  <button className='btn btn-danger mt-5' onClick={() => window.location.reload(false)}>Click to reload!</button>}
                 </div>
             </div>
         </>
