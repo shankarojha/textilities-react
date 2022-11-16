@@ -1,6 +1,6 @@
 import React from 'react'
 import './TypeTest.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function TypeTest(props) {
 
@@ -19,27 +19,43 @@ export default function TypeTest(props) {
     const [text, setText] = useState("")
     const [paragraph, setParagraph] = useState(paragraphs[Math.floor(Math.random()*9)])
     const [seconds, setSeconds] = useState(60)
+    const [score, setScore] = useState(0)
+    const [running, setRunning] = useState(false)
+
+    useEffect(()=>{
+        const timer = 
+        running && seconds > 0 && setInterval(()=>{
+            setSeconds(seconds-1)
+        }, 100)
+
+        const compareTexts=()=>{
+            const strArray1 = paragraph.split(' ')
+            const textWoSpace = text.replace(/\s{2,}/g, ' ').trim() 
+            const strArray2 = textWoSpace.split(' ')
+            let s = 0
+            for(let i=0; i<strArray1.length; i++){
+                if (strArray1[i]===strArray2[i]){
+                    (s+=1)
+                }
+            }
+            setSeconds("Time Up")
+            setScore(s)
+        }
+
+        seconds===0 && compareTexts()
+        return ()=> clearInterval(timer)
+    },[seconds, running])
 
     const textChangeHandler = (event) => {
-        console.log(text)
         setText(event.target.value)
-        event.preventDefault();
-    }
-
-    const myTimeout = setTimeout(() => {
-        if(seconds !=="Time Up"){
-            setSeconds(seconds-1)
-        }
-    }, 1000);
-
-    const clearMyTimeout = ()=>{
-        if(seconds<=50){
-            clearTimeout(myTimeout)
-            setSeconds("Time Up")
+        if(text.length>0 && text.length<2){
+            setRunning(true)
         }
     }
 
-    clearMyTimeout()
+    const startTest = () =>{
+        setRunning(true)
+    }
 
 
     return (
@@ -56,11 +72,18 @@ export default function TypeTest(props) {
                             rows={3}
                             value={text}
                             onChange={textChangeHandler}
+                            disabled={seconds==="Time Up"}
                         ></textarea>
                     </div>
                     <div className='col-12 d-flex justify-content-center align-items-center mt-5'>
-                        <div style={{border:"2px solid red", borderRadius:"50%", height:"20vh", width:"20vh"}} className="d-flex justify-content-center align-items-center">
+                        {!running && <button style={{border:"2px solid red", borderRadius:"50%", height:"20vw", width:"20vw", fontSize:"3vw"}} className="btn btn-primary d-flex justify-content-center align-items-center" onClick={startTest}>START</button>}
+                        {running && <div style={{border:"10px solid green", borderRadius:"50%", height:"20vw", width:"20vw", fontSize:"3vw"}} className="d-flex justify-content-center align-items-center"> 
                             <div>{seconds}</div>
+                        </div>}
+                    </div>
+                    <div className='col-12 d-flex justify-content-center align-items-center mt-5'>  
+                        <div style={{border:"15px solid blue", borderRadius:"5%", height:"20vw", width:"20vw",fontSize:"3vw"}} className="d-flex justify-content-center align-items-center">
+                            <div>{score}WPM</div>
                         </div>
                     </div>
                 </div>
